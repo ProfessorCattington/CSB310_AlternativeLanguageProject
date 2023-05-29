@@ -57,6 +57,7 @@ namespace CSB310_AlternativeLanguageProject
             RunRequiredTests();
 
             //report required queries
+            Console.WriteLine("\n====Report Required Tests====");
             PrintHighestAverageWeight(phoneDB);
             PrintDelayedRelease(phoneDB);
             PrintPhonesWithOneFeature(phoneDB);
