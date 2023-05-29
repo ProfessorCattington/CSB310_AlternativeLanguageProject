@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "CSB310_AlternativeLanguageProject/1.0.0": {
+        "runtime": {
+          "CSB310_AlternativeLanguageProject.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "CSB310_AlternativeLanguageProject/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
