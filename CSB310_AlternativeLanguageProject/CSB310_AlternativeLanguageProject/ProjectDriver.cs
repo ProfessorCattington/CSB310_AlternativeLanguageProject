@@ -57,6 +57,7 @@ namespace CSB310_AlternativeLanguageProject
             RunRequiredTests();
 
             //report required queries
+            Console.WriteLine("\n====Report Required Tests====");
             PrintHighestAverageWeight(phoneDB);
             PrintDelayedRelease(phoneDB);
             PrintPhonesWithOneFeature(phoneDB);
@@ -201,8 +202,8 @@ namespace CSB310_AlternativeLanguageProject
                     heaviestAverageOEM = oem;
                 }
             }
-
-            Console.WriteLine(String.Format("\nOEM with heaviest average phone: {0} at {1}(g)", heaviestAverageOEM, heaviestAverage));
+            Console.WriteLine("\n====Heaviest OEM test====");
+            Console.WriteLine(String.Format("OEM with heaviest average phone: {0} at {1}(g)", heaviestAverageOEM, heaviestAverage));
             
         }
         /// <summary>
@@ -261,10 +262,12 @@ namespace CSB310_AlternativeLanguageProject
 
             StringBuilder sb = new StringBuilder();
             sb.Append("\n====Phones with One feature====");
+            /*
             foreach (Cell cell in oneFeatureCells)
             {
                 sb.Append(String.Format("\n{0} {1}", cell.GetAttribute(Cell.attributes.oem), cell.GetAttribute(Cell.attributes.model)));
             }
+            */
             sb.Append(String.Format("\nTotal number of cells with 1 feature: {0}", oneFeatureCells.Count));
             Console.WriteLine(sb.ToString());
         }
