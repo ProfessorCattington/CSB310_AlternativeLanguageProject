@@ -13,7 +13,10 @@ namespace CSB310_AlternativeLanguageProject
             phoneDB = new Dictionary<int, Cell>();        
         }
 
-        //method for using regex to partially clean and seperate data before giving it to the cell class constructor
+        /// <summary>
+        /// method for using regex to partially clean and seperate data before giving it to the cell class constructor
+        /// </summary>
+        /// <param name="filePath"></param>
         public void BuildPhoneDBFromRegex(string filePath)
 
         {
@@ -26,34 +29,75 @@ namespace CSB310_AlternativeLanguageProject
             }
         }
 
-        // method for using the csv parser class to partially clean the data before giving it to the cell class constructor
-        public void BuildPhoneDBFromTextFieldParser(string filePath)
+        /// <summary>
+        /// method for using the csv parser class to partially clean the data before giving it to the cell class constructor
+        /// </summary>
+        /// <param name="filePath"></param>
+        public int BuildPhoneDBFromTextFieldParser(string filePath)
         {
+            int linesRead = 0;
 
             TextFieldParser parser = new TextFieldParser(filePath);
             parser.HasFieldsEnclosedInQuotes = true;
             parser.SetDelimiters(",");
 
             parser.ReadFields(); //discard the header line
+            linesRead++;
             while (!parser.EndOfData)
             {
                 string[] cellDataFields = parser.ReadFields();
                 AddPhoneToDB(cellDataFields);
+                linesRead++;
             }
+            return linesRead;
+        }
+        /// <summary>
+        /// method for getting a specific index out of the hashmap.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public Cell GetPhoneAtIndex(int index)
+        {
+            return phoneDB[index];
         }
 
-        public void AddPhoneToDB(string[] phoneDetails)
+
+        /// <summary>
+        /// simple function for adding a phone to the DB. returns the index of the added phone
+        /// </summary>
+        /// <param name="phoneDetails"></param>
+        public int AddPhoneToDB(string[] phoneDetails)
         {
             Cell newCell = new Cell(entryCounter, phoneDetails);
             phoneDB.Add(entryCounter, newCell);
-            entryCounter++;
+
+            return entryCounter++;
         }
 
-        public void DeletePhoneFromDB(int index)
+        /// <summary>
+        /// simple function for deleting a phone from the DB
+        /// </summary>
+        /// <param name="index"></param>
+        public bool DeletePhoneFromDB(int index)
         {
-            phoneDB.Remove(index);
+            if(phoneDB.ContainsKey(index))
+            {
+                phoneDB.Remove(index);
+                entryCounter--;
+                return true;
+            }
+            return false;
+            
+        }
+        public int GetNumberOfEntries()
+        {
+            return entryCounter;
         }
 
+        /// <summary>
+        /// Spam console with all the phone and their info to console
+        /// 
+        /// </summary>
         public void PrintAllPhones()
         {
 
@@ -91,6 +135,11 @@ namespace CSB310_AlternativeLanguageProject
             }
         }
 
+        /// <summary>
+        /// function for printing weight statistics about the phones in the database
+        /// 
+        /// 
+        /// </summary>
         public void PrintWeightStats()
         {
             //local vars
@@ -163,7 +212,7 @@ namespace CSB310_AlternativeLanguageProject
 
             Console.WriteLine(sb.ToString());
         }
-
+        //This was a test function before I made it more generic for columns rather than just OEM
         public void PrintUniqueManufacturers()
         {
             Dictionary<string, int> manufacturers = new Dictionary<string, int>();
@@ -197,6 +246,73 @@ namespace CSB310_AlternativeLanguageProject
             Console.WriteLine(sb.ToString());
         }
 
+        public Dictionary<string, List<Cell>> GetPhonesByManufacturer()
+        {
+            Dictionary<string, List<Cell>> output = new Dictionary<string, List<Cell>>();
+
+            foreach(KeyValuePair<int, Cell> pair in phoneDB)
+            {
+                if(!output.ContainsKey((string)pair.Value.GetAttribute(Cell.attributes.oem)))
+                {
+                    List<Cell> newList = new List<Cell>();
+                    newList.Add(pair.Value);
+                    output.Add((string)pair.Value.GetAttribute(Cell.attributes.oem), newList);
+                }
+                else
+                {
+                    List<Cell> cellsList = output[(string)pair.Value.GetAttribute(Cell.attributes.oem)];
+                    cellsList.Add(pair.Value);
+                }
+
+            }
+
+            return output;
+        }
+
+        /// <summary>
+        /// Function for printing all the unique values found in any column
+        /// 
+        /// </summary>
+        /// <param name="column"></param>
+        public void PrintUniqueColumnValues(Cell.attributes column)
+        {
+            Dictionary<string, int> results = new Dictionary<string, int>();
+            string columnHeader = Cell.GetAttributeColumnName(column);
+            string mostCommonResult = "";
+            int mostCommonFrequency = 0;
+            foreach (KeyValuePair<int, Cell> pair in phoneDB)
+            {
+                if (!results.ContainsKey((string)pair.Value.GetAttribute(column)))
+                {
+                    results.Add((string)pair.Value.GetAttribute(column), 1);
+                }
+                else
+                {
+                    results[(string)pair.Value.GetAttribute(column)]++;
+                }
+            }
+
+            //print all the results
+            StringBuilder sb = new StringBuilder();
+            sb.Append(String.Format("\n====Unique {0}====", columnHeader));
+            foreach (KeyValuePair<string, int> pair in results)
+            {
+                sb.Append(String.Format("\n{0}: {1}  results found: {2}",columnHeader, pair.Key, pair.Value));
+                if (pair.Value > mostCommonFrequency)
+                {
+                    mostCommonResult = pair.Key;
+                    mostCommonFrequency = pair.Value;
+                }
+            }
+            sb.Append(String.Format("\nMost common {0}: {1} with {2} results found.", columnHeader, mostCommonResult, mostCommonFrequency));
+            Console.WriteLine(sb.ToString());
+        }
+
+        /// <summary>
+        /// function for finding cell entries with a specific feature
+        /// 
+        /// </summary>
+        /// <param name="feature"></param>
         public void PrintModelsWithFeature(string feature)
         {
             //flatten the incomming text
@@ -229,9 +345,12 @@ namespace CSB310_AlternativeLanguageProject
             Console.WriteLine(sb.ToString());
         }
 
-        //method for printing the number of releases for each year.
-        //relies on announcement year. for almost all cases the announce year matches release year.
-        //use PrintDelayedRelease() to find models that released in a different year than they were announced
+        /// <summary>
+        /// method for printing the number of releases for each year.
+        /// relies on announcement year. for almost all cases the announce year matches release year.
+        /// use PrintDelayedRelease() to find models that released in a different year than they were announced
+        /// </summary>
+        /// <param name="year"></param>
         public void PrintYearlyReleases(int year = 0)
         {
             SortedDictionary<int, int> yearlyReleases = new SortedDictionary<int, int>();
@@ -276,6 +395,12 @@ namespace CSB310_AlternativeLanguageProject
             
             Console.WriteLine(sb.ToString());
         }
+
+        /// <summary>
+        /// function for printing yearly releases between two years. uses default values if none are provided
+        /// </summary>
+        /// <param name="lowerRange"></param>
+        /// <param name="upperRange"></param>
         public void PrintYearlyReleasesRange(int lowerRange = 1000, int upperRange = 9999)
         {
             SortedDictionary<int, int> yearlyReleases = new SortedDictionary<int, int>();
@@ -319,38 +444,6 @@ namespace CSB310_AlternativeLanguageProject
                 }
             }
             sb.Append(String.Format("\nMost active year: {0}", mostActiveYear));
-            Console.WriteLine(sb.ToString());
-        }
-
-        //function for printing the models that did not release in the year they were announced.
-        // This does not include discontinued or canceled results
-        public void PrintDelayedRelease()
-        {
-            List<Cell> delayedReleases = new List<Cell>();
-            foreach (KeyValuePair<int, Cell> pair in phoneDB)
-            {
-                Cell cell = pair.Value;
-                int announceYear = (int)cell.GetAttribute(Cell.attributes.launch_announced);
-                string launchStatus = (string)cell.GetAttribute(Cell.attributes.launch_status);
-                int launchYear;
-                Regex regex = new Regex("\\d{4}", RegexOptions.None);
-                Match match = regex.Match(launchStatus);
-                Int32.TryParse(match.Value, out launchYear);
-
-                if (launchYear > 0 && announceYear != launchYear)
-                {
-                    delayedReleases.Add(cell);
-                }
-            }
-
-            StringBuilder sb = new StringBuilder();
-            sb.Append("\n====Delayed Releases====");
-            sb.Append(String.Format("\nFound {0} delayed releases in the database", delayedReleases.Count));
-            foreach(Cell cell in delayedReleases)
-            {
-                sb.Append(String.Format("\n{0} {1}", cell.GetAttribute(Cell.attributes.oem), cell.GetAttribute(Cell.attributes.model)));
-            }
-
             Console.WriteLine(sb.ToString());
         }
     }

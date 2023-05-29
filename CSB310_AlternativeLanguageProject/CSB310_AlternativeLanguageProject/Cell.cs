@@ -1,11 +1,5 @@
-﻿using Microsoft.VisualBasic.FileIO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
+﻿using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace CSB310_AlternativeLanguageProject
 {
@@ -16,7 +10,7 @@ namespace CSB310_AlternativeLanguageProject
         private int db_index = 0;
         Object[] attributesArray;
 
-        private string[] columnHeaders = 
+        private static string[] columnHeaders = 
         {"OEM",
         "Model",
         "Launch Announcment Data",
@@ -53,10 +47,31 @@ namespace CSB310_AlternativeLanguageProject
             //CleanCellDataFromSource(sourceFields);
             CleanCellDataFromSourceIntoObjectArray(sourceFields);
         }
-        //getters and setters
+        /// <summary>
+        /// method for getting a specific attribute
+        /// </summary>
+        /// <param name="attribute"></param>
+        /// <returns></returns>
         public Object GetAttribute(Cell.attributes attribute)
         {
             return attributesArray[(int)attribute];
+        }
+        /// <summary>
+        /// method for getting the entire array of attributes
+        /// </summary>
+        /// <returns></returns>
+        public Object[] GetAttributes()
+        {
+            return attributesArray;
+        }
+        /// <summary>
+        /// method for getting the name of a column. mostly for String formatting and printing
+        /// </summary>
+        /// <param name="attribute"></param>
+        /// <returns></returns>
+        public static String GetAttributeColumnName(Cell.attributes attribute)
+        {
+            return columnHeaders[(int)attribute];
         }
 
         public int GetIndex()
@@ -166,7 +181,11 @@ namespace CSB310_AlternativeLanguageProject
             {
                 attributesArray[(int) attributes.display_type] = match.Groups[0].Value.Replace("\"", "");
             }
-            else
+            else if (displayTypeSource.Equals("-"))
+            {
+                attributesArray[(int)attributes.display_type] = null;
+            }
+            else 
             {
                 attributesArray[(int)attributes.display_type] = displayTypeSource;
             }

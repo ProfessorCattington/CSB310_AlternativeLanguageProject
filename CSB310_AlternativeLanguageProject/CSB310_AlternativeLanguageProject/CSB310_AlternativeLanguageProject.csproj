@@ -8,4 +8,10 @@
     <StartupObject>CSB310_AlternativeLanguageProject.ProjectDriver</StartupObject>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="CSB310_AlternativeLanguageProject">
+      <HintPath>bin\Debug\net6.0\CSB310_AlternativeLanguageProject.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
