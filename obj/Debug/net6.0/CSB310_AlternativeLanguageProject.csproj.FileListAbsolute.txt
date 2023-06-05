@@ -1,0 +1,15 @@
+C:\Users\Mike\git_stuff\CSB310_AlternativeLanguageProject\bin\Debug\net6.0\CSB310_AlternativeLanguageProject.exe
+C:\Users\Mike\git_stuff\CSB310_AlternativeLanguageProject\bin\Debug\net6.0\CSB310_AlternativeLanguageProject.deps.json
+C:\Users\Mike\git_stuff\CSB310_AlternativeLanguageProject\bin\Debug\net6.0\CSB310_AlternativeLanguageProject.runtimeconfig.json
+C:\Users\Mike\git_stuff\CSB310_AlternativeLanguageProject\bin\Debug\net6.0\CSB310_AlternativeLanguageProject.dll
+C:\Users\Mike\git_stuff\CSB310_AlternativeLanguageProject\bin\Debug\net6.0\CSB310_AlternativeLanguageProject.pdb
+C:\Users\Mike\git_stuff\CSB310_AlternativeLanguageProject\obj\Debug\net6.0\CSB310_AlternativeLanguageProject.csproj.AssemblyReference.cache
+C:\Users\Mike\git_stuff\CSB310_AlternativeLanguageProject\obj\Debug\net6.0\CSB310_AlternativeLanguageProject.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Mike\git_stuff\CSB310_AlternativeLanguageProject\obj\Debug\net6.0\CSB310_AlternativeLanguageProject.AssemblyInfoInputs.cache
+C:\Users\Mike\git_stuff\CSB310_AlternativeLanguageProject\obj\Debug\net6.0\CSB310_AlternativeLanguageProject.AssemblyInfo.cs
+C:\Users\Mike\git_stuff\CSB310_AlternativeLanguageProject\obj\Debug\net6.0\CSB310_AlternativeLanguageProject.csproj.CoreCompileInputs.cache
+C:\Users\Mike\git_stuff\CSB310_AlternativeLanguageProject\obj\Debug\net6.0\CSB310_AlternativeLanguageProject.dll
+C:\Users\Mike\git_stuff\CSB310_AlternativeLanguageProject\obj\Debug\net6.0\refint\CSB310_AlternativeLanguageProject.dll
+C:\Users\Mike\git_stuff\CSB310_AlternativeLanguageProject\obj\Debug\net6.0\CSB310_AlternativeLanguageProject.pdb
+C:\Users\Mike\git_stuff\CSB310_AlternativeLanguageProject\obj\Debug\net6.0\CSB310_AlternativeLanguageProject.genruntimeconfig.cache
+C:\Users\Mike\git_stuff\CSB310_AlternativeLanguageProject\obj\Debug\net6.0\ref\CSB310_AlternativeLanguageProject.dll
